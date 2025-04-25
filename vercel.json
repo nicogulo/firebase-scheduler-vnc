@@ -5,7 +5,7 @@
       "maxDuration": 30
     }
   },
-  "cron": [
+  "crons": [
     {
       "path": "/api/ping-vnc",
       "schedule": "0 9 * * *"
