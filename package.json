@@ -2,12 +2,11 @@
   "name": "firebase-scheduler-vnc",
   "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vercel dev"
-  },
   "dependencies": {
     "@vercel/node": "^5.1.14",
+    "axios": "^1.9.0",
     "chrome-aws-lambda": "^10.1.0",
+    "puppeteer": "^24.7.2",
     "puppeteer-core": "^21.3.8"
   }
 }

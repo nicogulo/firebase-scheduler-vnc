@@ -1,30 +1,30 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
-import puppeteer from "puppeteer-core";
-import chrome from "chrome-aws-lambda";
+import { NowRequest, NowResponse } from "@vercel/node";
+import puppeteer from "puppeteer";
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: NowRequest, res: NowResponse) {
   try {
-    // const browser = await puppeteer.launch({
-    //   args: chrome.args,
-    //   executablePath:
-    //     (await chrome.executablePath) || "/usr/bin/chromium-browser",
-    //   headless: true,
-    // });
+    const browser = await puppeteer.launch({
+      headless: true, // run in the background (no GUI)
+    });
+    const page = await browser.newPage();
 
-    // const page = await browser.newPage();
-    // const url =
-    //   "https://80-idx-test-1745383309201.cluster-xpmcxs2fjnhg6xvn446ubtgpio.cloudworkstations.dev/vnc.html?autoconnect=true&resize=remote";
+    // Akses URL VNC
+    await page.goto(
+      "https://80-idx-test-1745383309201.cluster-xpmcxs2fjnhg6xvn446ubtgpio.cloudworkstations.dev/vnc.html?autoconnect=true&resize=remote",
+      {
+        waitUntil: "domcontentloaded", // Tunggu sampai halaman dimuat
+      }
+    );
 
-    // await page.goto(url, { waitUntil: "networkidle2" });
+    // Bisa melakukan tindakan lain jika diperlukan, seperti screenshot atau mengambil informasi.
+    await page.screenshot({ path: "screenshot.png" });
 
-    // console.log("✅ Opened:", url);
+    // Tutup browser
+    await browser.close();
 
-    // await page.waitForTimeout(10000); // 10 detik
-    // await browser.close();
-
-    res.status(200).send("✅ VNC visited");
-  } catch (err: any) {
-    console.error("❌ Error:", err);
-    res.status(500).send("❌ Error visiting VNC");
+    // Kirim respons sukses
+    res.status(200).send("✅ VNC link successfully opened");
+  } catch (error: any) {
+    res.status(500).send("❌ Error opening VNC link: " + error.message);
   }
 }
