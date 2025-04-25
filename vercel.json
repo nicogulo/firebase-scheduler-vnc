@@ -4,11 +4,5 @@
       "memory": 1024,
       "maxDuration": 30
     }
-  },
-  "cron": [
-    {
-      "path": "/api/ping-vnc",
-      "schedule": "0 9 * * *"
-    }
-  ]
+  }
 }
